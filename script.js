@@ -1,14 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // FAQ Accordion (If exists)
+    // FAQ Accordion logic
     const faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-            faqItems.forEach(otherItem => { if (otherItem !== item) otherItem.classList.remove('active'); });
-            item.classList.toggle('active');
-        });
+        if (question) {
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close others
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    updateFaqIcon(otherItem, false);
+                });
+
+                // Toggle current
+                if (!isActive) {
+                    item.classList.add('active');
+                    updateFaqIcon(item, true);
+                }
+            });
+        }
     });
+
+    function updateFaqIcon(item, active) {
+        // Handle text icons (+/-)
+        const plusMinus = item.querySelector('.plus, .minus');
+        if (plusMinus) {
+            plusMinus.textContent = active ? '-' : '+';
+            plusMinus.className = active ? 'minus' : 'plus';
+        }
+
+        // Handle Bootstrap icons (bi-chevron)
+        const chevron = item.querySelector('.bi-chevron-down');
+        if (chevron) {
+            chevron.style.transform = active ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+    }
 
     // Mobile Menu Toggle
     const mobileBtn = document.querySelector('.mobile-menu-btn');
@@ -184,16 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // FAQ Accordion (Universal)
-    const allFaqs = document.querySelectorAll('.faq-item');
-    allFaqs.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        if (question) {
-            question.addEventListener('click', () => {
-                item.classList.toggle('active');
-            });
-        }
-    });
 
     /* ================= SHARE LOGIC ================= */
     const shareBtns = document.querySelectorAll('.share-btn');

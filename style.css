@@ -267,9 +267,15 @@ img { max-width: 100%; display: block; object-fit: cover; }
 .faq-answer {
     margin-top: 10px; color: #666; font-size: 0.9rem;
     line-height: 1.5; display: none;
+    overflow: hidden;
+    transition: var(--transition);
 }
 .faq-item.active .faq-answer { display: block; }
 .faq-item.active .faq-question { color: var(--accent-color); }
+
+.faq-question .bi, .faq-question .plus, .faq-question .minus {
+    transition: transform 0.3s ease;
+}
 
 /* ================= STATS BAR ================= */
 .stats-bar { background: var(--bg-dark); color: white; padding: 60px 0; }
